@@ -1,4 +1,7 @@
+from __future__ import annotations   # این باید خط اول باشه
+
 from app.schemas import LoginRequest, TokenResponse
+# ... بقیه importها
 from __future__ import annotations
 
 import logging
