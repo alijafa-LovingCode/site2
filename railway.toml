@@ -1,0 +1,16 @@
+# Railway configuration for the WEB service.
+# Deploy this repository as one Railway service using this file, then add
+# a SECOND Railway service ("worker") from the same repo/image with the
+# start command overridden to:  python worker.py
+# (see README.md -> "Railway Deployment" for full step-by-step instructions)
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+healthcheckPath = "/health"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
