@@ -107,3 +107,6 @@ def change_password(
     db.commit()
     log_activity(db, user, "password_changed")
     return {"message": "رمز عبور با موفقیت تغییر کرد."}
+    git add app/routes/auth_routes.py
+git commit -m "fix: move future import to top of file"
+git push origin main
