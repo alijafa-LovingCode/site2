@@ -1,6 +1,8 @@
 from __future__ import annotations
-from datetime import datetime, timedelta, timezone
+
 import logging
+from datetime import datetime, timedelta, timezone
+
 from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -24,7 +26,6 @@ COOKIE_NAME = "access_token"
 
 
 @router.post("/login", response_model=TokenResponse)
-@limiter.limit(settings.login_rate_limit)
 def login(payload: LoginRequest, request: Request, response: Response, db: Session = Depends(get_db)):
     username = payload.username.strip().lower()
     user = db.execute(select(User).where(User.username == username)).scalar_one_or_none()
@@ -100,4 +101,3 @@ def change_password(
     user.password_hash = hash_password(payload.new_password)
     db.commit()
     log_activity(db, user, "password_changed")
-    return {"message": "رمز عبور با موفقیت تغییر کرد."}
